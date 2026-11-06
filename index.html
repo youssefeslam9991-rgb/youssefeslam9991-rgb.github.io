@@ -10,12 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="simulator.css">
+  <link rel="stylesheet" href="translator.css">
   <script src="simulator.js" defer></script>
+  <script src="translator.js" defer></script>
 </head>
 <body>
   <header class="topbar">
     <a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a>
-    <nav aria-label="Main navigation"><a href="#world">World</a><a href="#upgrades">Upgrades</a><a href="#missions">Missions</a></nav>
+    <nav aria-label="Main navigation"><a href="#world">World</a><a href="#upgrades">Upgrades</a><a href="#missions">Missions</a><a href="#translator">Translate</a></nav>
     <a class="nav-cta" href="#world">Play now <span aria-hidden="true">↗</span></a>
   </header>
   <main>
@@ -36,6 +38,16 @@
       <section class="panel worlds"><div class="panel-heading"><div><p class="eyebrow">GO FURTHER</p><h2>New worlds</h2></div><span class="panel-icon">◎</span></div><div class="world-card"><div class="world-art meadow"><span>✦</span><i></i></div><div class="world-card-copy"><b>Crystal Fields</b><small>Your adventure starts here</small><em class="unlocked">● UNLOCKED</em></div><span class="world-check">✓</span></div><div class="world-card"><div class="world-art ember"><span>♨</span><i></i></div><div class="world-card-copy"><b>Ember Valley</b><small>Crystals are worth more here</small><em>Unlock for <span id="ember-cost">1,000</span> energy</em></div><button id="unlock-ember" class="unlock-button" type="button">Unlock</button></div><p class="world-note" id="world-note">Explore the field to find energy crystals.</p></section>
       <section class="panel missions" id="missions"><div class="panel-heading"><div><p class="eyebrow">KEEP IT GOING</p><h2>Missions</h2></div><span class="panel-icon">✳</span></div><div class="mission-item"><span class="mission-icon">✦</span><div class="mission-copy"><b>Crystal collector</b><small>Collect 10 crystals</small><div class="mission-progress"><i id="mission-crystal-bar"></i></div></div><span class="mission-count" id="mission-crystal-count">0/10</span></div><div class="mission-item"><span class="mission-icon purple">⬆</span><div class="mission-copy"><b>Gear up</b><small>Buy 2 upgrades</small><div class="mission-progress"><i id="mission-upgrade-bar"></i></div></div><span class="mission-count" id="mission-upgrade-count">0/2</span></div><div class="mission-item"><span class="mission-icon gold">◎</span><div class="mission-copy"><b>World explorer</b><small>Unlock Ember Valley</small><div class="mission-progress"><i id="mission-world-bar"></i></div></div><span class="mission-count" id="mission-world-count">0/1</span></div><p class="mission-reward">Mission rewards are collected automatically: <b>+250 energy</b> each.</p></section>
     </section>
+
+    <section class="translator page-width" id="translator" aria-labelledby="translator-title">
+      <div class="translator-panel">
+        <div class="translator-heading"><div><p class="eyebrow">SPEAK PLAYER</p><h2 id="translator-title">Quick translator<span>.</span></h2><p>Translate a message between languages.</p></div><span class="translator-mark" aria-hidden="true">文</span></div>
+        <div class="translator-languages"><label>FROM<select id="source-language" aria-label="Translate from"><option value="en">English</option><option value="ar">Arabic</option><option value="fr">French</option><option value="es">Spanish</option><option value="tr">Turkish</option></select></label><button class="swap-languages" id="swap-languages" type="button" aria-label="Swap languages">⇄</button><label>TO<select id="target-language" aria-label="Translate to"><option value="ar">Arabic</option><option value="en">English</option><option value="fr">French</option><option value="es">Spanish</option><option value="tr">Turkish</option></select></label></div>
+        <div class="translator-fields"><label class="translator-field">YOUR TEXT<textarea id="translator-input" maxlength="500" rows="4" placeholder="Type something to translate…"></textarea><small><span id="character-count">0</span>/500</small></label><label class="translator-field">TRANSLATION<textarea id="translator-output" rows="4" readonly placeholder="Your translation will appear here…"></textarea><small id="translator-status" aria-live="polite">Translation uses an online service.</small></label></div>
+        <div class="translator-actions"><button class="translate-button" id="translate-button" type="button">Translate <span aria-hidden="true">→</span></button><span class="privacy-note">Text is sent to MyMemory to translate.</span></div>
+      </div>
+    </section>
+
     <section class="about page-width"><span class="about-badge">B</span><div><p class="eyebrow">HEY, PLAYER</p><h2>Made for exploring.</h2><p>Collect crystals, improve your gear, and see how many worlds you can unlock. Your progress saves in this browser.</p></div></section>
   </main>
   <footer class="footer page-width"><a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a><span>Made for players, one crystal at a time.</span><span>© <span id="year"></span> BACONRBXDEV</span></footer>
