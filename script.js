@@ -7,6 +7,7 @@ const playfield = document.querySelector('#playfield');
 const startButton = document.querySelector('#start-button');
 const message = document.querySelector('#screen-message');
 const gameStatus = document.querySelector('#game-status');
+const heroStage = document.querySelector('#hero-stage');
 
 const BEST_KEY = 'baconrbxdev-neon-click-best';
 let score = 0;
@@ -35,11 +36,10 @@ function showBestScore() {
 }
 
 function moveTarget() {
-  const fieldBounds = playfield.getBoundingClientRect();
-  const size = target.offsetWidth;
-  const padding = size / 2 + 8;
-  const x = padding + Math.random() * Math.max(0, fieldBounds.width - padding * 2);
-  const y = padding + Math.random() * Math.max(0, fieldBounds.height - padding * 2);
+  const bounds = playfield.getBoundingClientRect();
+  const padding = target.offsetWidth / 2 + 8;
+  const x = padding + Math.random() * Math.max(0, bounds.width - padding * 2);
+  const y = padding + Math.random() * Math.max(0, bounds.height - padding * 2);
   target.style.left = `${x}px`;
   target.style.top = `${y}px`;
 }
@@ -98,3 +98,39 @@ startButton.addEventListener('click', startGame);
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 showBestScore();
+
+// Give the hero scene a subtle pointer-responsive 3D parallax effect.
+if (heroStage && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  heroStage.addEventListener('pointermove', (event) => {
+    if (event.pointerType === 'touch') return;
+    const rect = heroStage.getBoundingClientRect();
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    heroStage.style.setProperty('--rx', `${-y * 18}deg`);
+    heroStage.style.setProperty('--ry', `${x * 18}deg`);
+    heroStage.style.setProperty('--mx', `${x * 8}px`);
+    heroStage.style.setProperty('--my', `${y * 8}px`);
+  });
+  heroStage.addEventListener('pointerleave', () => {
+    heroStage.style.setProperty('--rx', '0deg');
+    heroStage.style.setProperty('--ry', '0deg');
+    heroStage.style.setProperty('--mx', '0px');
+    heroStage.style.setProperty('--my', '0px');
+  });
+}
+
+// Tilt the feature cards slightly on pointer devices.
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.card-tilt').forEach((card) => {
+    card.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `rotateX(${-y * 5}deg) rotateY(${x * 5}deg) translateY(-2px)`;
+    });
+    card.addEventListener('pointerleave', () => {
+      card.style.transform = '';
+    });
+  });
+}
