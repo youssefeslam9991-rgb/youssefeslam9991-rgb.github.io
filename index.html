@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#08090e">
-  <meta name="description" content="Play Bacon Boost Simulator: collect energy, unlock upgrades, and rebirth your way to the top.">
+  <meta name="description" content="Explore the Bacon Boost simulator. Collect crystals, upgrade your gear, unlock new zones, and build your energy empire.">
   <title>Bacon Boost — Simulator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,49 +13,31 @@
   <script src="simulator.js" defer></script>
 </head>
 <body>
-  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
   <header class="topbar">
-    <a class="brand" href="#home" aria-label="BaconRbxdev home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a>
-    <nav aria-label="Main navigation"><a href="#simulator">Simulator</a><a href="#upgrades">Upgrades</a><a href="#about">About</a></nav>
-    <a class="nav-cta" href="#simulator">Play now <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a>
+    <nav aria-label="Main navigation"><a href="#world">World</a><a href="#upgrades">Upgrades</a><a href="#missions">Missions</a></nav>
+    <a class="nav-cta" href="#world">Play now <span aria-hidden="true">↗</span></a>
   </header>
-
   <main>
-    <section class="hero page-width" id="home">
-      <div class="hero-copy">
-        <p class="eyebrow"><span class="live-dot"></span> BACONRBXDEV SIMULATOR</p>
-        <h1>Tap. Upgrade.<br><span class="gradient-text">Take over.</span></h1>
-        <p class="hero-text">Build your energy empire one tap at a time. Collect energy, power up your gear, and rebirth for an even bigger boost.</p>
-        <div class="hero-actions"><a class="button button-primary" href="#simulator">Enter simulator <span aria-hidden="true">↓</span></a><span class="hero-note">Free to play · Progress saves on this device</span></div>
-      </div>
-      <div class="hero-scene" aria-label="Glowing 3D energy core" role="img"><div class="scene-grid"></div><div class="scene-ring ring-a"></div><div class="scene-ring ring-b"></div><div class="energy-core"><span>B</span></div><div class="scene-label"><i></i> ENERGY CORE <b>ONLINE</b></div><div class="scene-float">✦ <span>POWER UP</span></div><div class="scene-orb orb-a"></div><div class="scene-orb orb-b"></div></div>
+    <section class="intro page-width" id="home"><div><p class="eyebrow"><i class="live-dot"></i> BACONRBXDEV SIMULATOR</p><h1>Explore. Collect.<br><span class="gradient-text">Build your world.</span></h1><p class="intro-copy">Explore the crystal fields, gather energy, upgrade your gear, and unlock new places. Your adventure starts here.</p></div><div class="intro-orb" aria-hidden="true"><div class="orb-ring"></div><div class="orb-core">B</div><span class="orb-spark">✦</span></div></section>
+
+    <section class="game-wrap page-width" id="world">
+      <div class="game-topbar"><div><span class="world-label">CURRENT WORLD</span><h2 id="zone-name">Crystal Fields</h2></div><div class="hud"><div class="hud-item"><small>ENERGY</small><b id="energy">0</b></div><div class="hud-item"><small>CRYSTALS</small><b id="crystals">0</b></div><div class="hud-item"><small>LEVEL</small><b id="level">1</b></div></div></div>
+      <div class="canvas-frame"><canvas id="game" aria-label="Simulator game world. Move around and collect glowing crystals." tabindex="0"></canvas><div class="game-toast" id="toast" aria-live="polite"></div><div class="world-hint" id="world-hint">WASD / ARROWS TO MOVE · SPACE TO COLLECT NEARBY CRYSTALS</div></div>
+      <div class="game-controls"><div class="keyboard-help"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="help-copy">Move around · Walk near crystals to collect</span></div><button id="collect-nearby" class="collect-nearby" type="button">Collect nearby <span>✦</span></button><div class="mobile-pad" aria-label="Touch movement controls"><button data-dir="up" aria-label="Move up">▲</button><button data-dir="left" aria-label="Move left">◀</button><button data-dir="down" aria-label="Move down">▼</button><button data-dir="right" aria-label="Move right">▶</button></div></div>
     </section>
 
-    <section class="simulator page-width" id="simulator">
-      <div class="section-heading"><div><p class="eyebrow">YOUR SIMULATOR</p><h2>Build your power.</h2></div><div class="save-status"><i></i> AUTO-SAVED</div></div>
-      <div class="game-layout">
-        <section class="play-panel" aria-label="Energy collector">
-          <div class="panel-top"><span><i class="live-dot"></i> ENERGY COLLECTOR</span><span class="rank-pill" id="rank">ROOKIE</span></div>
-          <div class="energy-count"><span id="energy">0</span><small>ENERGY</small></div>
-          <div class="tap-zone"><div class="tap-halo"></div><button id="collect-button" class="collect-button" type="button" aria-label="Tap to collect energy"><span class="collect-inner"><b>+</b><small>TAP TO<br>COLLECT</small></span></button><div id="particles" class="particles" aria-hidden="true"></div></div>
-          <div class="stats-row"><div><small>PER TAP</small><b id="tap-power">1</b></div><div><small>PER SECOND</small><b id="auto-power">0</b></div><div><small>MULTIPLIER</small><b id="multiplier">x1</b></div></div>
-          <p class="tap-hint">Tap the core or press <kbd>SPACE</kbd> to collect</p>
-        </section>
-
-        <aside class="shop-panel" id="upgrades">
-          <div class="shop-heading"><div><p class="eyebrow">THE WORKSHOP</p><h3>Power-ups</h3></div><span class="shop-symbol">↗</span></div>
-          <button class="upgrade-card" id="upgrade-click" type="button"><span class="upgrade-icon click-icon">✦</span><span class="upgrade-copy"><b>Stronger taps</b><small>More energy every tap</small><em>Level <span id="click-level">0</span></em></span><span class="upgrade-cost"><b id="click-cost">25</b><small>⚡ energy</small></span></button>
-          <button class="upgrade-card" id="upgrade-auto" type="button"><span class="upgrade-icon auto-icon">⟳</span><span class="upgrade-copy"><b>Auto collector</b><small>Earn energy while you play</small><em>Level <span id="auto-level">0</span></em></span><span class="upgrade-cost"><b id="auto-cost">100</b><small>⚡ energy</small></span></button>
-          <div class="shop-divider"></div>
-          <div class="rebirth-box"><div class="rebirth-copy"><span class="rebirth-icon">⟲</span><div><b>Rebirth</b><small>Reset upgrades for a permanent boost</small></div></div><button id="rebirth-button" class="rebirth-button" type="button" disabled><span id="rebirth-cost">25K</span><small>REBIRTH</small></button></div>
-          <p class="rebirth-note" id="rebirth-note">Reach <b>25,000 energy</b> to rebirth.</p>
-        </aside>
-      </div>
-      <div class="progress-strip"><span class="progress-title">NEXT REBIRTH</span><div class="progress-track"><span id="progress-fill"></span></div><span id="progress-label">0 / 25K</span></div>
+    <section class="management page-width">
+      <section class="panel upgrades" id="upgrades"><div class="panel-heading"><div><p class="eyebrow">GEAR SHOP</p><h2>Upgrade your gear</h2></div><span class="panel-icon">↗</span></div><div class="upgrade-list">
+        <button class="upgrade-card" data-upgrade="gloves"><span class="upgrade-icon">✊</span><span class="upgrade-copy"><b>Power gloves</b><small>Collect more energy per crystal</small><em>Level <span id="gloves-level">0</span></em></span><span class="upgrade-price"><b id="gloves-cost">50</b><small>energy</small></span></button>
+        <button class="upgrade-card" data-upgrade="boots"><span class="upgrade-icon purple">➤</span><span class="upgrade-copy"><b>Speed boots</b><small>Explore the map faster</small><em>Level <span id="boots-level">0</span></em></span><span class="upgrade-price"><b id="boots-cost">75</b><small>energy</small></span></button>
+        <button class="upgrade-card" data-upgrade="drone"><span class="upgrade-icon gold">✧</span><span class="upgrade-copy"><b>Helper drone</b><small>Collects energy every second</small><em>Level <span id="drone-level">0</span></em></span><span class="upgrade-price"><b id="drone-cost">150</b><small>energy</small></span></button>
+      </div></section>
+      <section class="panel worlds"><div class="panel-heading"><div><p class="eyebrow">GO FURTHER</p><h2>New worlds</h2></div><span class="panel-icon">◎</span></div><div class="world-card"><div class="world-art meadow"><span>✦</span><i></i></div><div class="world-card-copy"><b>Crystal Fields</b><small>Your adventure starts here</small><em class="unlocked">● UNLOCKED</em></div><span class="world-check">✓</span></div><div class="world-card"><div class="world-art ember"><span>♨</span><i></i></div><div class="world-card-copy"><b>Ember Valley</b><small>Crystals are worth more here</small><em>Unlock for <span id="ember-cost">1,000</span> energy</em></div><button id="unlock-ember" class="unlock-button" type="button">Unlock</button></div><p class="world-note" id="world-note">Explore the field to find energy crystals.</p></section>
+      <section class="panel missions" id="missions"><div class="panel-heading"><div><p class="eyebrow">KEEP IT GOING</p><h2>Missions</h2></div><span class="panel-icon">✳</span></div><div class="mission-item"><span class="mission-icon">✦</span><div class="mission-copy"><b>Crystal collector</b><small>Collect 10 crystals</small><div class="mission-progress"><i id="mission-crystal-bar"></i></div></div><span class="mission-count" id="mission-crystal-count">0/10</span></div><div class="mission-item"><span class="mission-icon purple">⬆</span><div class="mission-copy"><b>Gear up</b><small>Buy 2 upgrades</small><div class="mission-progress"><i id="mission-upgrade-bar"></i></div></div><span class="mission-count" id="mission-upgrade-count">0/2</span></div><div class="mission-item"><span class="mission-icon gold">◎</span><div class="mission-copy"><b>World explorer</b><small>Unlock Ember Valley</small><div class="mission-progress"><i id="mission-world-bar"></i></div></div><span class="mission-count" id="mission-world-count">0/1</span></div><p class="mission-reward">Mission rewards are collected automatically: <b>+250 energy</b> each.</p></section>
     </section>
-
-    <section class="about-section page-width" id="about"><div class="about-avatar">B<span>✦</span></div><div><p class="eyebrow">HEY, PLAYER</p><h2>Welcome to my simulator.</h2><p class="about-copy">Collect energy, build your upgrades, and see how far you can go. Your progress is saved automatically in your browser.</p></div><a class="about-link" href="#home" aria-label="Back to top">↑</a></section>
+    <section class="about page-width"><span class="about-badge">B</span><div><p class="eyebrow">HEY, PLAYER</p><h2>Made for exploring.</h2><p>Collect crystals, improve your gear, and see how many worlds you can unlock. Your progress saves in this browser.</p></div></section>
   </main>
-  <footer class="footer page-width"><a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a><span>Made for players, one tap at a time.</span><span>© <span id="year"></span> BACONRBXDEV</span></footer>
+  <footer class="footer page-width"><a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a><span>Made for players, one crystal at a time.</span><span>© <span id="year"></span> BACONRBXDEV</span></footer>
 </body>
 </html>
