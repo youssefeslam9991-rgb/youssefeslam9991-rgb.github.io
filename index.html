@@ -3,53 +3,640 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#08090e">
-  <meta name="description" content="Explore the Bacon Boost simulator. Collect crystals, upgrade your gear, unlock new zones, and build your energy empire.">
-  <title>Bacon Boost — Simulator</title>
+  <meta name="theme-color" content="#070b14">
+  <meta name="description" content="Youssef Eslam builds polished digital experiences, immersive interfaces, and modern front-end products.">
+  <title>Youssef Eslam | Creative Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="simulator.css">
-  <link rel="stylesheet" href="translator.css">
-  <script src="simulator.js" defer></script>
-  <script src="translator.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-2: #0d1220;
+      --panel: #101827;
+      --panel-2: #151f31;
+      --line: rgba(255,255,255,0.08);
+      --text: #edf2ff;
+      --muted: #9aa9c2;
+      --primary: #8b5cf6;
+      --secondary: #3dd9c2;
+      --accent: #f7c873;
+      --shadow: 0 30px 60px rgba(10,12,18,0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(139,92,246,0.18), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(61,217,194,0.12), transparent 25%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; }
+    ul { margin: 0; padding-left: 1.2rem; }
+    li { margin: 0.4rem 0; color: var(--muted); }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(7,11,20,0.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 78px;
+      gap: 20px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: var(--shadow);
+      color: #050a12;
+      font-weight: 800;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .nav a:hover { color: var(--text); }
+
+    .nav-cta {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), #6d83ff);
+      color: #fff;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero {
+      padding: 84px 0 36px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      align-items: center;
+      gap: 42px;
+    }
+
+    .eyebrow {
+      font-family: "DM Mono", monospace;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: var(--secondary);
+      margin: 0 0 18px;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      margin: 0 0 20px;
+      letter-spacing: -0.06em;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #f4f6ff 0%, #b0b3ff 40%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-copy p {
+      margin: 0 0 28px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 660px;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .primary-btn, .secondary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, var(--primary), #6d83ff);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .secondary-btn {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+    }
+
+    .hero-meta {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-family: "DM Mono", monospace;
+      font-size: 0.8rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 480px;
+      display: grid;
+      place-items: center;
+    }
+
+    .orb {
+      position: relative;
+      width: min(100%, 430px);
+      aspect-ratio: 1;
+      border-radius: 30% 70% 55% 45% / 42% 58% 42% 58%;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), rgba(255,255,255,0) 18%),
+        radial-gradient(circle at 60% 35%, rgba(139,92,246,0.75), transparent 32%),
+        linear-gradient(135deg, rgba(56,189,248,0.25), rgba(139,92,246,0.25), rgba(61,217,194,0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .orb::before,
+    .orb::after {
+      content: "";
+      position: absolute;
+      inset: 12% 16%;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: radial-gradient(circle at center, rgba(255,255,255,0.1), rgba(255,255,255,0));
+    }
+
+    .orb::after {
+      inset: 25% 28%;
+      background: radial-gradient(circle at center, rgba(61,217,194,0.18), rgba(139,92,246,0.18));
+    }
+
+    .floating-card {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(10,15,25,0.8);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      font-size: 0.84rem;
+      color: var(--muted);
+      width: 180px;
+    }
+
+    .card-one { top: 18%; left: 4%; transform: rotate(-8deg); }
+    .card-two { bottom: 18%; right: 4%; transform: rotate(8deg); }
+    .card-three { top: 50%; right: -5%; transform: translateY(-50%); }
+
+    .stat {
+      font-weight: 700;
+      color: var(--text);
+      font-size: 1.1rem;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .section { padding: 64px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.05em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 540px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: var(--shadow);
+      min-height: 240px;
+    }
+
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 1.45rem;
+      letter-spacing: -0.04em;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .icon-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(61,217,194,0.14));
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 1.5rem;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 2rem;
+      letter-spacing: -0.04em;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-family: "DM Mono", monospace;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 16px;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.015);
+    }
+
+    .project-item strong { font-size: 1.08rem; }
+    .project-item span {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .cta {
+      padding: 80px 0;
+    }
+
+    .cta-box {
+      text-align: center;
+      padding: 56px 28px;
+      border-radius: 30px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(139,92,246,0.12), rgba(61,217,194,0.08)),
+        rgba(255,255,255,0.02);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      letter-spacing: -0.06em;
+    }
+
+    .cta-box p {
+      margin: 0 auto 28px;
+      max-width: 650px;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 24px 0 60px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid, .split, .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .nav { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .hero { padding-top: 60px; }
+      .brand { font-size: 0.8rem; }
+      .brand-mark { width: 28px; height: 28px; border-radius: 10px; }
+      .topbar-inner { min-height: 66px; }
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .primary-btn, .secondary-btn { width: 100%; }
+      .floating-card {
+        position: static;
+        transform: none !important;
+        width: 100%;
+        margin-top: 14px;
+      }
+      .hero-visual { min-height: unset; }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a>
-    <nav aria-label="Main navigation"><a href="#world">World</a><a href="#upgrades">Upgrades</a><a href="#missions">Missions</a><a href="#translator">Translate</a></nav>
-    <a class="nav-cta" href="#world">Play now <span aria-hidden="true">↗</span></a>
+    <div class="container topbar-inner">
+      <a class="brand" href="#home" aria-label="Home">
+        <span class="brand-mark">Y</span>
+        <span>Youssef Eslam</span>
+      </a>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="nav-cta" href="#contact">Let’s talk</a>
+    </div>
   </header>
-  <main>
-    <section class="intro page-width" id="home"><div><p class="eyebrow"><i class="live-dot"></i> BACONRBXDEV SIMULATOR</p><h1>Explore. Collect.<br><span class="gradient-text">Build your world.</span></h1><p class="intro-copy">Explore the crystal fields, gather energy, upgrade your gear, and unlock new places. Your adventure starts here.</p></div><div class="intro-orb" aria-hidden="true"><div class="orb-ring"></div><div class="orb-core">B</div><span class="orb-spark">✦</span></div></section>
 
-    <section class="game-wrap page-width" id="world">
-      <div class="game-topbar"><div><span class="world-label">CURRENT WORLD</span><h2 id="zone-name">Crystal Fields</h2></div><div class="hud"><div class="hud-item"><small>ENERGY</small><b id="energy">0</b></div><div class="hud-item"><small>CRYSTALS</small><b id="crystals">0</b></div><div class="hud-item"><small>LEVEL</small><b id="level">1</b></div></div></div>
-      <div class="canvas-frame"><canvas id="game" aria-label="Simulator game world. Move around and collect glowing crystals." tabindex="0"></canvas><div class="game-toast" id="toast" aria-live="polite"></div><div class="world-hint" id="world-hint">WASD / ARROWS TO MOVE · SPACE TO COLLECT NEARBY CRYSTALS</div></div>
-      <div class="game-controls"><div class="keyboard-help"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="help-copy">Move around · Walk near crystals to collect</span></div><button id="collect-nearby" class="collect-nearby" type="button">Collect nearby <span>✦</span></button><div class="mobile-pad" aria-label="Touch movement controls"><button data-dir="up" aria-label="Move up">▲</button><button data-dir="left" aria-label="Move left">◀</button><button data-dir="down" aria-label="Move down">▼</button><button data-dir="right" aria-label="Move right">▶</button></div></div>
-    </section>
+  <main id="home">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Creative developer • digital designer • builder</p>
+          <h1>Turning ideas into <span class="gradient-text">immersive web experiences.</span></h1>
+          <p>I build polished digital products, interactive experiences, and game-inspired interfaces that help brands and businesses stand out online.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#work">View my work</a>
+            <a class="secondary-btn" href="#about">Learn more</a>
+          </div>
+          <div class="hero-meta">
+            <span>Available for freelance work</span>
+            <span>•</span>
+            <span>Based in the UAE</span>
+          </div>
+        </div>
 
-    <section class="management page-width">
-      <section class="panel upgrades" id="upgrades"><div class="panel-heading"><div><p class="eyebrow">GEAR SHOP</p><h2>Upgrade your gear</h2></div><span class="panel-icon">↗</span></div><div class="upgrade-list">
-        <button class="upgrade-card" data-upgrade="gloves"><span class="upgrade-icon">✊</span><span class="upgrade-copy"><b>Power gloves</b><small>Collect more energy per crystal</small><em>Level <span id="gloves-level">0</span></em></span><span class="upgrade-price"><b id="gloves-cost">50</b><small>energy</small></span></button>
-        <button class="upgrade-card" data-upgrade="boots"><span class="upgrade-icon purple">➤</span><span class="upgrade-copy"><b>Speed boots</b><small>Explore the map faster</small><em>Level <span id="boots-level">0</span></em></span><span class="upgrade-price"><b id="boots-cost">75</b><small>energy</small></span></button>
-        <button class="upgrade-card" data-upgrade="drone"><span class="upgrade-icon gold">✧</span><span class="upgrade-copy"><b>Helper drone</b><small>Collects energy every second</small><em>Level <span id="drone-level">0</span></em></span><span class="upgrade-price"><b id="drone-cost">150</b><small>energy</small></span></button>
-      </div></section>
-      <section class="panel worlds"><div class="panel-heading"><div><p class="eyebrow">GO FURTHER</p><h2>New worlds</h2></div><span class="panel-icon">◎</span></div><div class="world-card"><div class="world-art meadow"><span>✦</span><i></i></div><div class="world-card-copy"><b>Crystal Fields</b><small>Your adventure starts here</small><em class="unlocked">● UNLOCKED</em></div><span class="world-check">✓</span></div><div class="world-card"><div class="world-art ember"><span>♨</span><i></i></div><div class="world-card-copy"><b>Ember Valley</b><small>Crystals are worth more here</small><em>Unlock for <span id="ember-cost">1,000</span> energy</em></div><button id="unlock-ember" class="unlock-button" type="button">Unlock</button></div><p class="world-note" id="world-note">Explore the field to find energy crystals.</p></section>
-      <section class="panel missions" id="missions"><div class="panel-heading"><div><p class="eyebrow">KEEP IT GOING</p><h2>Missions</h2></div><span class="panel-icon">✳</span></div><div class="mission-item"><span class="mission-icon">✦</span><div class="mission-copy"><b>Crystal collector</b><small>Collect 10 crystals</small><div class="mission-progress"><i id="mission-crystal-bar"></i></div></div><span class="mission-count" id="mission-crystal-count">0/10</span></div><div class="mission-item"><span class="mission-icon purple">⬆</span><div class="mission-copy"><b>Gear up</b><small>Buy 2 upgrades</small><div class="mission-progress"><i id="mission-upgrade-bar"></i></div></div><span class="mission-count" id="mission-upgrade-count">0/2</span></div><div class="mission-item"><span class="mission-icon gold">◎</span><div class="mission-copy"><b>World explorer</b><small>Unlock Ember Valley</small><div class="mission-progress"><i id="mission-world-bar"></i></div></div><span class="mission-count" id="mission-world-count">0/1</span></div><p class="mission-reward">Mission rewards are collected automatically: <b>+250 energy</b> each.</p></section>
-    </section>
-
-    <section class="translator page-width" id="translator" aria-labelledby="translator-title">
-      <div class="translator-panel">
-        <div class="translator-heading"><div><p class="eyebrow">SPEAK PLAYER</p><h2 id="translator-title">Quick translator<span>.</span></h2><p>Translate a message between languages.</p></div><span class="translator-mark" aria-hidden="true">文</span></div>
-        <div class="translator-languages"><label>FROM<select id="source-language" aria-label="Translate from"><option value="en">English</option><option value="ar">Arabic</option><option value="fr">French</option><option value="es">Spanish</option><option value="tr">Turkish</option></select></label><button class="swap-languages" id="swap-languages" type="button" aria-label="Swap languages">⇄</button><label>TO<select id="target-language" aria-label="Translate to"><option value="ar">Arabic</option><option value="en">English</option><option value="fr">French</option><option value="es">Spanish</option><option value="tr">Turkish</option></select></label></div>
-        <div class="translator-fields"><label class="translator-field">YOUR TEXT<textarea id="translator-input" maxlength="500" rows="4" placeholder="Type something to translate…"></textarea><small><span id="character-count">0</span>/500</small></label><label class="translator-field">TRANSLATION<textarea id="translator-output" rows="4" readonly placeholder="Your translation will appear here…"></textarea><small id="translator-status" aria-live="polite">Translation uses an online service.</small></label></div>
-        <div class="translator-actions"><button class="translate-button" id="translate-button" type="button">Translate <span aria-hidden="true">→</span></button><span class="privacy-note">Text is sent to MyMemory to translate.</span></div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orb"></div>
+          <div class="floating-card card-one">
+            <span class="icon-badge">⚡</span>
+            <div><span class="stat">UI Systems</span> Design-led interfaces</div>
+          </div>
+          <div class="floating-card card-two">
+            <span class="icon-badge">🎮</span>
+            <div><span class="stat">Game UX</span> Immersive interactions</div>
+          </div>
+          <div class="floating-card card-three">
+            <span class="icon-badge">🚀</span>
+            <div><span class="stat">Launch-ready</span> Fast, scalable builds</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="about page-width"><span class="about-badge">B</span><div><p class="eyebrow">HEY, PLAYER</p><h2>Made for exploring.</h2><p>Collect crystals, improve your gear, and see how many worlds you can unlock. Your progress saves in this browser.</p></div></section>
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">About</p>
+            <h2>Building memorable digital products.</h2>
+          </div>
+          <p>I create experiences that blend clean design, motion, performance, and usability—so people remember the product and keep coming back.</p>
+        </div>
+
+        <div class="split">
+          <div class="panel">
+            <h3>Who I am</h3>
+            <p>I’m a creative developer focused on turning ideas into refined online experiences. From landing pages to interactive prototypes, I design and build products that feel premium and perform well.</p>
+            <div class="metrics">
+              <div class="metric">
+                <span>Years</span>
+                <strong>3+</strong>
+              </div>
+              <div class="metric">
+                <span>Projects</span>
+                <strong>20+</strong>
+              </div>
+              <div class="metric">
+                <span>Focus</span>
+                <strong>Web</strong>
+              </div>
+              <div class="metric">
+                <span>Style</span>
+                <strong>Modern</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Core strengths</h3>
+            <ul>
+              <li>Creative direction and visual storytelling</li>
+              <li>Responsive front-end development</li>
+              <li>Interactive product design</li>
+              <li>Performance-focused web builds</li>
+              <li>Game-inspired UI and UX concepts</li>
+              <li>Clean, scalable code structure</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Selected work</p>
+            <h2>Designs that feel alive.</h2>
+          </div>
+          <p>Recent work blends strategy, usability, and motion to create products that are both functional and memorable.</p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon-badge">🎯</div>
+            <h3>Brand landing pages</h3>
+            <p>Clean, conversion-focused pages designed to clarify value and spark action.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge">🧩</div>
+            <h3>Interactive experiences</h3>
+            <p>Immersive product interfaces with polished transitions and user-focused interaction design.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge">🕹️</div>
+            <h3>Game-inspired builds</h3>
+            <p>Playful design systems that still feel premium, sophisticated, and conversion-ready.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Services</p>
+            <h2>From concept to launch.</h2>
+          </div>
+          <p>Helping founders and teams turn rough ideas into elegant, high-performing digital experiences.</p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon-badge">💡</div>
+            <h3>Landing pages</h3>
+            <p>High-converting single-page websites with modern layouts and crisp storytelling.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge">🎨</div>
+            <h3>UI/UX design</h3>
+            <p>Interfaces built around clarity, flow, and user delight—without sacrificing performance.</p>
+          </div>
+          <div class="card">
+            <div class="icon-badge">⚙️</div>
+            <h3>Development</h3>
+            <p>Production-ready front-end builds that are scalable, responsive, and easy to maintain.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="cta-box">
+          <p class="eyebrow">Let’s build something great</p>
+          <h2>Ready to turn your idea into a real experience?</h2>
+          <p>I help brands and founders create web experiences that look premium, feel intuitive, and convert better.</p>
+          <div class="hero-actions" style="justify-content:center;">
+            <a class="primary-btn" href="mailto:youssef@example.com">Start a project</a>
+            <a class="secondary-btn" href="https://github.com/youssefeslam9991-rgb" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer class="footer page-width"><a class="brand" href="#home"><span class="brand-icon">B</span><span>Bacon<span class="brand-accent">Rbxdev</span></span></a><span>Made for players, one crystal at a time.</span><span>© <span id="year"></span> BACONRBXDEV</span></footer>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year">2026</span> Youssef Eslam</span>
+      <span>All rights reserved</span>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
